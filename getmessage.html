@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="receive">接收消息</div>
+</body>
+<script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
+<script>
+// $('.receive').click(()=>{
+  window.addEventListener('message',(event)=>{
+      // if(event.origin!=='http://127.0.0.1:1000'){ return };
+      console.error('接收到了消息', event.data, event);
+      event.source.postMessage('send', event.origin);
+  },false)
+// })
+</script>
+</html>

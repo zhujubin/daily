@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    <iframe src="http://127.0.0.1:1000" id="myiframe" frameborder="0"></iframe>
+    <div class="test">localStorage 传值</div>
+    <div class="iframe">iframe传值</div>
+</body>
+<script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
+<script>
+  $('.test').click(()=>{
+    // alert('www');
+    let name = [{name:'name1',value:'nick'}, {name:'name2', value:'damon'}, {name:'name3', value:'daming'}];
+    name.forEach((item)=>{
+      window.localStorage.setItem(item.name,item.value);
+    })
+
+    setTimeout(() => {
+      let item = window.localStorage.getItem('web_title');//获取指定字段
+      let all = window.localStorage.valueOf();//获取所有
+      let length = window.localStorage.length;
+      let key = window.localStorage.key(2)//获取key值为2对应的值，key从0开始
+      // window.localStorage.clear();//清除
+      console.error(item);
+      console.error(all);
+      console.error(length);
+      console.error('key', key);
+    }, 1000);
+  });
+
+  
+//使用postMessage传递值给其他页面在本地测试需要设置代理,文件目录是不行的
+  $('.test').dblclick(()=>{
+    let domain = 'http://127.0.0.1:1000';
+    let open = window.open(domain, 'mywindow' );
+    setTimeout(() => {
+      let message = {name:'name', value:'man'};
+      console.error('message is', message); 
+      open.postMessage(message, domain)
+    }, 1000);
+  })
+
+  //使用iframe传值
+  $('.iframe').click(()=>{
+    let domain = 'http://127.0.0.1:1000';
+    let iframe = document.getElementById('myiframe').contentWindow;
+    console.error('iframe',iframe);
+    setTimeout(() => {
+      let message = {name:'发送', value:'man'};
+      console.error('message is', message); 
+      iframe.postMessage(message, '*')//*代表所有的url都可以发送
+    }, 1000);
+  })
+
+</script>
+</html>

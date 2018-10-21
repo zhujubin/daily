@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./login.css" type="text/css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="title-box">
+        <div>
+          <span class="logo"><img src="./img/logo.png" alt=""></span><i class="line"></i> <span class="title">用户登陆</span>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div>
+        <div>
+          <div class="login-box">
+            <div class="box-wrap">
+              <div class="login-body">
+                <div class="login-head">登陆 客企2000</div>
+                <div class="login-input">
+                  <div class="login-form" method="post">
+                    <div class="business-id">
+                      <span>企业ID</span> <input class="compId" onblur="getBusinessId()" class="account-num" placeholder="请输入企业ID" type="text">
+                    </div>
+                    <div class="alert-compid"></div>
+
+                    <div>
+                      <span>企业名称</span> <input class="comp-name" readonly  type="text">
+                    </div>
+                    <div class="alert-ID"></div>
+      
+                    <div class="login-num">
+                      <span>账号</span> <input onblur="validateUser()" class="account-num" placeholder="请输入账号" type="text">
+                    </div>
+                    <div class="alert-num"></div>
+
+                    <div class="login-pass">
+                      <span>密码</span> <input onblur="validatePassword()" class="password" placeholder="请输入密码" type="password"><i onclick="toggleVisible()" class="passwordeye invisible"></i>
+                    </div>
+                    <div class="alert-pass"></div>
+
+                    <div class="login-button" onclick="login()">登陆</div>
+                  </div>
+                </div>
+                <div class="login-bottom">
+                  <div class="bottom-box">
+                    <div class="bottom-one">
+                      <div class="remember-pass"><i onclick="isRemember()" class="remember"></i><a href="#">记住密码</a></div>
+                      <div class="fogot"><a href="#">忘记密码</a></div>
+                    </div>
+                  </div>
+                  <div class="register">还没账号？ <a href="#">立即注册</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+          CopyRight 2005-2018 &nbsp; 客企2000&nbsp; 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;增值电信业务经营许可证书：浙江B2-20090169
+      </div>
+    </main>
+  </div>
+</body>
+<script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+//获取所有alert信息节点
+  let account_alert = $('.alert-num')[0],
+      password_alert = $('.alert-pass')[0],
+      alert_compid = $('.alert-compid')[0];
+
+
+//获取企业号
+function getBusinessId(){
+  let compid = $('.compId')[0].value,
+      compData = {'compid':compid,'_token':'{{csrf_token()}}'};
+      // compdata = {
+      //   'code':200,
+      //   'compid':1,
+      //   'compname':'q彩'
+      // }
+  if(compid){
+    alert_compid.innerHTML = "";
+    $.ajax({
+      type:'POST',
+      url:'/auth/getcompinfo',
+      data:compData
+    }).then((data)=>{
+      console.error(data)
+      if(data.code==200){
+        //企业号
+        $('.comp-name')[0].value = compdata.compname;
+        return true;
+      }else{
+        $('.alert-compid').addClass('error');
+        $('.alert-compid').innerHTML = '企业号不存在';
+        return false;
+      }
+    })
+  
+  }else{
+    alert_compid.innerHTML = "请输入企业ID";
+    return false;
+  }
+}
+
+  //点击登陆
+  function login(){
+    let validate = this.validateForm(),
+        user = $('.account-num')[0].value,
+        password = $('.password')[0].value,
+        isremembered = $('.remember').hasClass('isRemembered'),
+        loginData = {
+          'user':user,
+          'pass':password,
+          '_token':'{{csrf_token()}}'
+        };
+    
+    if(isremembered){
+      this.setCookie(user, password, 1);
+    }else{
+      this.clearCookie();
+    }
+    this.getCookie()
+    if(validate){
+      $.ajax({
+        type:'POST',
+        url:'/auth/login',
+        data:loginData
+      }).then((data)=>{
+        console.error(data);
+        if(data.code === 200){
+          location.href = 'home';
+        }else{
+          alert('账号或密码错误请重新输入');
+          $('.account-num')[0].value = '';
+          $('.password')[0].value = '';
+        }
+      })
+    }else{
+      return
+    }
+  }
+
+  //验证表单
+  function validateForm(){
+    let userNum = this.validateUser(),
+        password = this.validatePassword(),
+        comp = this.getBusinessId();
+    if(userNum && password && comp){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  //失去焦点时候验证
+  function validateUser(){
+    let userNum = $('.account-num')[0].value;
+    if(!userNum){
+      account_alert.innerHTML = '请输入账号';
+      return false
+    }else{
+      account_alert.innerHTML = '';
+      this.getCookie();
+      return true;
+    }
+  }
+
+  function validatePassword(){
+    let password = $('.password')[0].value;
+    if(!password){
+      password_alert.innerHTML = '请输入密码';
+      return false;
+    }else{
+      password_alert.innerHTML = '';
+      return true;
+    }
+  }
+
+  //控制密码可见
+  function toggleVisible(){
+    var passNode = $('.password')[0];
+    var passwordeye = $('.passwordeye');
+    if(passwordeye.hasClass('invisible')){
+      passwordeye.addClass("visible");
+      passwordeye.removeClass("invisible");
+      passNode.setAttribute("type", "text");
+    }else{
+      passwordeye.addClass("invisible");
+      passwordeye.removeClass("visible");
+      passNode.setAttribute("type", "password");
+    }
+  }
+
+  // 记住密码
+  function isRemember(){
+    var isremember = $('.remember');
+    if(isremember.hasClass('isRemembered')){
+      isremember.removeClass('isRemembered')
+    }else{
+      isremember.addClass('isRemembered')
+    }
+  }
+  
+  // 设置cookie
+  function setCookie(name, pass, exdays){
+    var exdate = new Date();
+    exdate.setTime(exdate.getTime() + 24*60*60*1000*exdays);
+    window.document.cookie = "userName" + "=" + name + ";path=/;expires=" + exdate.toGMTString();
+    window.document.cookie = "userPwd" + "=" + pass + ";path=/;expires=" + exdate.toGMTString();
+  }
+
+  //读取cookie
+  function getCookie(){
+    let cookie = window.document.cookie.split('; '),
+        username = '',
+        password = '';
+    cookie.forEach((item, index)=>{
+      let everyItem = item.split('=');
+      if(everyItem[0] === 'userName' && everyItem[1]){
+        username = everyItem[1]
+      }
+      if(everyItem[0] === 'userPwd' && everyItem[1]){
+        password = everyItem[1]
+      }
+    })
+    if(username === $('.account-num')[0].value){
+      $('.password')[0].value = password;
+    }
+  }
+
+  //清除cookie
+  function clearCookie(){
+    this.setCookie('','',-1);
+  }
+</script>
+</html>

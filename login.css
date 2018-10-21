@@ -1,0 +1,300 @@
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+a,
+p,
+textarea {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+input{
+   box-shadow: 0 0 0px 1000px #262333 inset !important;
+}
+
+input {
+  outline: 0;
+  background-color: #fff;
+}
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+img {
+  border: none;
+  display: inline-block;
+}
+
+body {
+  background: #FFF !important;
+  /* font-family: "Microsoft Yahei UI", "Microsoft Yahei", "Gotham SSm A",
+    "Gotham SSm B", Helvetica, Arial, sans-serif; */
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+}
+.wrapper{
+  width: 100%;
+  width: 100%;
+}
+
+header{
+  width: 100%;
+}
+
+.title-box>div{
+  width: 800px;
+  min-width: 800px;
+  height: 50px;
+  padding-left: 15px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.title-box img{
+  display: inline-block;
+  height: 30px;
+}
+
+.title-box i{
+  display: inline-block;
+  height: 30px;
+  margin: 0 10px;
+  border-left: 1px solid rgb(155, 153, 153);
+}
+
+.title{
+  font-size: 16px;
+}
+
+main{
+  background: url('./img/bg.png') no-repeat;
+}
+
+.login-box{
+  width: 100%;
+  min-height: 869px;
+  padding-top: 100px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.bottom{
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  line-height: 60px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.box-wrap{
+  width: 1000px;
+  min-width: 1000px;
+  padding-left: 250px;
+  padding-right: 250px;
+}
+
+.login-body{
+  width: 500px;
+  height: 600px;
+  padding-top: 50px;
+  background-color: #E1E3E8;
+  opacity: 0.7;
+}
+
+.login-head{
+  width: 100%;
+  height: 50px;
+  line-height: 70px;
+  text-align: center;
+  font-size: 25px;
+}
+
+.login-input{
+  width: 100%;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.login-form{
+  display: inline-block;
+  width: 400px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.login-form>div{
+  width: 300px;
+  height: 40px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.login-form>div>input{
+  display: inline-block;
+  height: 30px;
+  border: none;
+  font-size: 16px;
+}
+
+.login-form>.alert-compid{
+  width: 300px;
+  height: 30px;
+  justify-content: start;
+  color: red;
+  font-size: 10px;
+  background-color: #E0E2E8;
+  padding-left: 25px;
+}
+
+.login-form>.alert-num{
+  width: 300px;
+  height: 30px;
+  justify-content: start;
+  color: red;
+  font-size: 10px;
+  background-color: #E0E2E8;
+  padding-left: 25px;
+}
+
+.login-form>.alert-pass{
+  width: 300px;
+  height: 30px;
+  justify-content: start;
+  color: red;
+  font-size: 10px;
+  background-color: #E0E2E8;
+  padding-left: 25px;
+}
+
+.login-form>.alert-ID{
+  width: 300px;
+  height: 30px;
+  justify-content: start;
+  color: red;
+  font-size: 10px;
+  background-color: #E0E2E8;
+  padding-left: 20px;
+}
+
+.error{
+  background: url('./img/alert.png') 0 5px no-repeat;
+}
+
+.login-form>div>span{
+  width: 70px;
+}
+
+.login-pass>span{
+  padding-left: 15px !important;
+}
+
+.login-button{
+  background-color: #1798FC !important;
+  cursor: pointer;
+  color: #fff !important;
+}
+
+.login-bottom{
+  width: 100%;
+  padding: 0 100px;
+}
+
+.bottom-box{
+  width: 300px;
+}
+
+.bottom-one{
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-between;
+}
+
+.fogot>a{
+  color: #1F9BFC;
+}
+
+.register{
+  width: 300px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+}
+
+.register>a{
+  color: #1F9BFC;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+.passwordeye{
+  display: inline-block;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.invisible{
+  display: inline-block;
+  width: 27px;
+  height: 20px;
+  background: url('./img/eyeclose.png') no-repeat;
+}
+
+.visible{
+  display: inline-block;
+  width: 27px;
+  height: 20px;
+  background: url('./img/eyeopen.png') -3px no-repeat;
+}
+
+.remember-pass{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.remember{
+  display: inline-block;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 5%;
+  cursor: pointer;
+}
+
+.isRemembered{
+  background: url('./img/select.png') no-repeat;
+}
